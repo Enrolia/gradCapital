@@ -1,6 +1,7 @@
 # Enrolia
 
-Enrolia is a post-graduate application workflow that pulls admission data, deadlines, scholarships, faculty rosters, peer groups, reddit threads and VISA information into one live hub for students. 
+Enrolia is a post-graduate application workflow that pulls admission data, deadlines, scholarships, faculty rosters, peer groups, reddit threads and VISA information into one live hub for students. Caters to major pain points of students and speedlines the tedious phase of applications.
+See the flow and architecture diagrams to know more. 
 
 ## Product Flow and UI (5 tabs and sidebar)
 
@@ -50,7 +51,7 @@ classDef side fill:#fee2e2,stroke:#dc2626,color:#b91c1c,stroke-width:2px;
 ```
 
 ### Tab 1 · Discovery & Onboarding
-- Three fields: University, program, intake duration, Optional field(add spouse/family)
+- Three fields: University, program, intake duration, [Optional] field (add spouse/family)
 - Results shows (5-7 minutes): (applicants' country specific)
   - Deadlines
   - Tuition and insurance fees
@@ -66,7 +67,9 @@ classDef side fill:#fee2e2,stroke:#dc2626,color:#b91c1c,stroke-width:2px;
   - Optional (laws regarding family immigration, and extra funding from university for family support)
 - Call to action: <span style="color:#16a34a"><strong>Add to Dashboard</strong></span>
 
-### Tab 2 · Calender and Reminders
+Note: There is a plan for pre-onboarding university discovery for students who know the program that they want to but not sure what all universitites offer those programs. However this is very low on priority as this can be easily googled and tools already exist to do so in an instant. If many users recommend this, then can start developing a n8n workflow for this after alpha. 
+
+### Tab 2 · Calendar and Reminders
 - Calendar view with color-coded event types (application, scholarship, SOP, LOR, interview)
 - One-click sync to Google Calendar
 - Early reminders via mail and notifications to user to fill their SOPs, get LORs, pay application fees way before time (reminders can be edited)
@@ -80,40 +83,42 @@ classDef side fill:#fee2e2,stroke:#dc2626,color:#b91c1c,stroke-width:2px;
   - Drive linked documents
   - Sharing link of SOPs for people to review (and add suggestions)
   - Option to delete application
-- Basic checklist already added when clicked on CTA in tab1
+  - (Optional) Links to awesome and golden SOP guides from Jordan (Write Ivy). If the app generates enough interest, can try to onboard Jordon for 1:1 consulations
+- Basic checklist already added when clicked on CTA in Tab 1
+
+Note: From day one, the goal of the app is never to provide any type of AI "aid" in writing the SOP. That's a skill and effort that I believe they definitely should learn on their own for a successfull application. 
 
 ### Tab 4 · Finance Planner
 - Tuition, insurance and living cost(prefilled) with scholarship offsets (can change the different amounts)
 - Loan planner which allows user to add various funding sources (family savings, part-time work, internships during vacations, professors' grants), with EMI slider
-- Not planning anything like this right now (but there is always an option to recommend local banks and insurance)
+- (Optional - not immediate priority) Add recommendations for funding student loans from local banks and insurance companies
 - Option to export this info as pdf
 
 ### Tab 5 · Comparison 
-- Side-by-side cards (up to 3 programs) with fees, location, ranking, research opportunities, visa timelines, funding options, basically all the info we scraped earlier for choosing and deciding their options via a scoring system where the candidate can select how much weight they want to put towards each criteria. (there would be a default weight applied)
+- Side-by-side cards (up to 3 programs) with fees, location, ranking, research opportunities, visa timelines, funding options, basically all the info we scraped earlier for choosing and deciding their options via a scoring system where the candidate can select how much weight they want to put towards each criteria. (there would be a default weight applied, if none chosen)
 
 ### Sidebar · Post-Acceptance Kits
-- Visa checklist per destination, pre-departure packing, packing checklist, arrival paperwork (I have expertise in making overkill packing checklists!!!)
-- Also gives user a document for common laws that he/she could be unaware coming from a different country
-- When user updates that they accepted an offer, a checklist for that university is generated for them. 
+- When user updates that they accepted an offer, a checklist for that university is generated for them. Visa checklist for destination, pre-departure packing, packing checklist, arrival paperwork (I have expertise in making overkill packing checklists for travelling!!!)
+- Also provides the user a document for common laws that he/she could be unaware coming from a different country
 - Option to export to pdf
 
 
 ### Sidebar · Utilities (Low priority)
-- Very straight to the point, pdf resizer/size reducer and jpeg size reducer/resizer - Low priority 
-- Gmail monitoring for university and professor replies (from official domains) - default opt out (but user can opt in for this) - Low priority feature
+- Simple pdf and jpeg resizer (saves the resized documents directly in the selected application's folder)
+- Gmail monitoring for university and professor replies (from official domains) - default opt out (but user can opt in for this) -[Low priority feature]
 - Chrome extension for prefilling profile info during applications (higher priority)
-- Daily (pre curated) ling of one thread/blog posts/video about story of a student getting into the program of their choice (higher priority)
+- Daily (pre curated) link of one thread/blog posts/video about story of a student getting into the program of their choice (higher priority)
 - Additional language support (lower priority)
-- Screen reader support (higher priority)
+- Screen reader semantic support (higher priority)
 
 ### Sidebar · Settings
 - Profile & Identity: Name, photo, nationality, education level, GRE/GMAT scores, GPA scale, research interests (for prefilling in applications)
-- Data & Privacy: GPDR compliancy, option to request deletion of data from server during account deletion, revoking drive/gmail/google account access (can't use most features without it)
+- Data & Privacy: GPDR compliancy, option to request all user data from server before account deletion, revoking drive/gmail/google account access (can't use most features without it)
 - Delete account
 - Subscriptions (not planned the cost model yet)
-- Feature requests/ feedback section
+- Feature requests/feedback section
 
-## Planned Architecture and development flow
+## Planned Architecture and Pipeline Flow
 
 ```mermaid
 %%{init: {
@@ -331,38 +336,70 @@ flowchart TD
   linkStyle 54,55,56,57,58,59,60,61,62 stroke:#0891b2,stroke-dasharray:3 3,stroke-width:2px;
 ```
 
+## Scope of problem
+
+
+
+- 2.2M+ students apply abroad for postgraduate programs each year, juggling 5–15 university portals. Each campus runs its own admissions stack (Slate, Liaison CAS, Ellucian, Workday), forcing applicants to manually scrape deadlines, requirements, and communications manually.
+
+- Most applicants (on reddit) still live out of spreadsheets and Notion boards which works fine to be honest but is very high effort and tedious to maintain and needs a high amount of effort in the beginning. 
+
+- Missing a single deadline, document, or visa slot can derail an entire application season especially for international students.
+
+- Post-acceptance logistics (visa procedure, housing, dependents, travel, local scenario) are non-existent or just an afterthought in existing tools
+
+- Most fully managed platform is consulatation and counsellor based where they manually do all this work for you and charge exorbitantly for this help. Most students in developing countries can't really afford that high of a cost just for applications (which are already so expensive). 
+
+
+
+## Competitors and our USP
+
+
+| Category | Key players | Strengths / focus | Gaps vs. Enrolia |
+| --- | --- | --- | --- |
+| Student-facing marketplaces | ApplyBoard, Yocket, LeapScholar, AdmitKard | Discovery, counsellors, program matching, and application assistance. They simplify the process of finding and applying to universities. | Function as marketplaces rather than neutral automation tools. They have limited single-program workflow management. |
+| Institutional portals & CRMs | Liaison/GradCAS, DreamApply, Slate, Ellucian, Workday Student | Power official admissions flows, application review, and communications for universities. They are robust systems for managing the entire admissions lifecycle from the institution's perspective. | These are university-owned silos. They do not provide a way for students to orchestrate applications across different institutions or have a student-controlled central hub. |
+| DIY templates & forums | Notion/Sheets trackers, Reddit templates | Free and highly flexible, allowing students to customize their application tracking to their specific needs. | Require significant manual effort to set up and maintain, are prone to errors, and lack live updates or integration with gmail and reminder apps. |
+| Finance & scholarship services | GyanDhan, Submittable | Specialize in loan and scholarship matching. GyanDhan is an education financing marketplace, while Submittable is a platform for managing grant and scholarship applications that are already prepared by universities or organisations. | Focus is on financing or prepared framework and not on neutral application info and tracking. |
+| Consulting/coaching | Crimson Education, Lumiere Education | Provide highly personalized counseling and essay review. Crimson Education focuses on admissions consulting, while Lumiere Education offers research programs to help students stand out. | These services are very expensive and manual. If you can afford them they are the best in class in providing end to end solution. |
+
+
 
 ## Current progress
-- Researched and designed the UI flow, have started creating some mocks in figma
-- Researched about the backend architecture, current plan is to have one development environment in my homelab and two production server on GKE (one for free, one for premium servers). During the alpha would not be going for HA and would be just following 3-2-1 backups. 
-- Have started developing 2 of the n8n workflows, only testing with local models right now (whatever currently my llama.cpp server can handle on 24gb VRAM)
-- After workflow finalization, I am tilting towards groq (if the open-weights models work as expected)
-- The plan is to use the lowest possible performant model as slave to get the workflow to appropriate results, for the master model, I am testing with GPT OSS ones, but would go for models GPT 5 medium reasoning one when I have finalised. 
+- Researched and designed the UI flow, have started creating mocks in figma
+- Researched about the backend architecture, current plan is to have one development environment in my homelab and two production server on GKE (one for free, one for premium servers). During the alpha would not be going for High Availability and would be just following 1 offsite and 1 cloud backup. 
+- I have setup k8s on my 4 node PVE cluster with a single node for n8n (2vCPU anD 4GB RAM) and a node for Django (which provides local API endpoint) for talking with the backend. Won't be needed on managed GKE (but I have also setup up redundant recursive Unbound DNS, a vanilla MAC binded firewall, 2 ISP + 4g network load balancing for all the local devices, automatic graceful shutdowns on power backup and nightly backups on VM and containers to TrueNAS Scale).
+- Have started developing 2 of the n8n workflows (Deadlines scraping, Regional tutition fees for students) but only testing with local models (Qwen 3 Coder 30B, GPT OSS 20B and Gemma 3 27B) right now (whatever currently my llama.cpp server can handle on 24gb VRAM).
+- After workflow finalization, I am tilting towards groq (if the open-weights models work as expected) otherwise woud be resorting to 
+- The plan is to use the lowest possible performant model as slave to get the workflow to appropriate results. For the master model, I am testing with GPT OSS ones, but would go for models like GPT 5 medium reasoning ones when I have finalised. 
+- According to my understanding today's open weight (and especially proprietary) models are enough capable to aid in these n8ns' workflows without any finetuning and RAG systems in place. 
+(If the results are not what I am expecting, first line of attack would be simple RAG system tailored only for one workflow. Yes fine-tuning is also an option but from past experience I have seen it underperforming in most of the scenarios).  
 
 
 ## Plan
 - Prototype: I plan to have a alpha version of Enrolia by December 15th. I would have ample time in December to solve user queries after invite only release. I won't have any premium tier during alpha release.  
 
-- During alpha phase, would only be marketing through reddit threads, linked-in and personal circle (no ads yet)
-
-- Alpha (Dec 2025): I am not going to charge users during the alpha stage so would be bleeding a little in API costs and server costs duing this phase. I ran a small experiment in my homelab (4 node PVE cluser with my own networking), a kubernetes cluster similar to my experiment would cost me around 100 dollar per month for hardware and 400-600 dollars in API for 4000-5000 users. (Assuming users are not abusing the app, I would be rate limitng for that)
+- During alpha phase, would only be marketing through reddit threads, linked-in, twitter and personal circle (no ads yet). I am not going to charge users during the alpha stage so would be bleeding a little in API costs and server costs during this phase. I ran a small experiment in my homelab (4 node PVE cluser with my own networking), a kubernetes cluster similar to my experiment would cost me around 100 dollar per month for hardware and 400-600 dollars in API for serving 4000-5000 users. (To not allow users are not abusing the app, I would be rate limitng at the Gateway level). Also the scaling of n8n with vCPUs and RAM turned out to be extremely good. 
 I would also be limiting my alpha release to 10000 users so that I can contain the initial costs. 
 
-- Pricing/Subscription cost: I am not deciding the subscription cost right now and also brainstorming if I should have a one time BYOK option. I would have much clarity about my expense v/s pricing strategy during the alpha release. 
+- Pricing/Subscription cost: I am not deciding the subscription cost right now and also brainstorming if I should have a one time BYOK option. I would have better clarity about my expense v/s pricing strategy during the alpha release. 
 
-- Beta target: Beta stage should be around March-April, however I want to polish the UX and onboarding before that and will extend that if not ready to my expectations. Will think about ads and marketing strategies. 
+- The plan is to have students who are applying to European and Asian universities get onboarded during the alpha and their feedback could be iterated upon for the next cohort of US applications. 
+
+- Beta target: Beta stage should be around March-April, however I want to polish the UX and onboarding before that and will extend the timeline if not ready upto my expectations. Will think about ads and marketing strategies around this time. 
 
 - Developer tools: Jira and mattermost is my goto, however I am inclining towards using linear too (haven't decided that yet)
 
 ## Grant usage
 
-- Primarily would be using the grant for API credits and GCP costs (after extinguishing the free GCP credits)
+- Primarily would be using the grant for API credits and GCP costs (after extinguishing the free GCP credits).
 
 ## Future plan
 
-- Will be applying for GCP start tier credits after Jan. 
+- Will be applying for GCP start tier credits for startup after Jan. 
 - Depending upon the initial respone during alpha phase, will think about scaling the infra and marketing strategies
+- With k8s and n8ns both vertical and horizontal scaling is easily possible. 
 
 
 
-
+If your IDE doesn't display mermaid diagram properly, see [here](https://github.com/Enrolia/gradCapital) or just view the .png file in the codebase. 
